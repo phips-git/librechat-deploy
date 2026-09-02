@@ -17,8 +17,8 @@ services:
       - librechat-images:/app/client/public/images
       - librechat-uploads:/app/uploads
       - librechat-logs:/app/api/logs
-    expose:
-      - "3080"
+    ports:
+      - "127.0.0.1:3080:3080"
 
   mongodb:
     container_name: librechat-mongodb
@@ -38,19 +38,6 @@ services:
       - MEILI_NO_ANALYTICS=true
     volumes:
       - meilisearch-data:/meili_data
-
-  nginx:
-    image: nginx:1.27-alpine
-    container_name: librechat-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - api
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./nginx/certs:/etc/nginx/certs:ro
 
 volumes:
   mongodb-data:
