@@ -1,0 +1,11 @@
+# LibreChat configuration
+# Full reference: https://www.librechat.ai/docs/configuration/librechat_yaml
+version: 1.2.1
+
+# Cache configuration (uses in-memory cache by default – suitable for small deployments).
+cache: true
+
+# Define the AI providers/endpoints available to users.
+# See https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints for full options.
+endpoints:
+  custom: []

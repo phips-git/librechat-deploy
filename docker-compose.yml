@@ -1,0 +1,60 @@
+services:
+  api:
+    image: ghcr.io/danny-avila/librechat:latest
+    container_name: librechat-api
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    environment:
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/LibreChat
+      - MEILI_HOST=http://meilisearch:7700
+    volumes:
+      - ./librechat.yaml:/app/librechat.yaml:ro
+      - librechat-images:/app/client/public/images
+      - librechat-uploads:/app/uploads
+      - librechat-logs:/app/api/logs
+    expose:
+      - "3080"
+
+  mongodb:
+    container_name: librechat-mongodb
+    image: mongo:8.0
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
+    command: mongod --noauth
+
+  meilisearch:
+    container_name: librechat-meilisearch
+    image: getmeili/meilisearch:v1.35.1
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - MEILI_NO_ANALYTICS=true
+    volumes:
+      - meilisearch-data:/meili_data
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: librechat-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+
+volumes:
+  mongodb-data:
+  meilisearch-data:
+  librechat-images:
+  librechat-uploads:
+  librechat-logs:
