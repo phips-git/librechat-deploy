@@ -5,7 +5,23 @@ version: 1.2.1
 # Cache configuration (uses in-memory cache by default – suitable for small deployments).
 cache: true
 
-# Define the AI providers/endpoints available to users.
-# See https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints for full options.
+# AI provider endpoints.
+# API keys are configured here (referenced from environment variables stored in .env)
+# rather than as bare variables in .env, so all provider config lives in one place.
+# Full endpoint reference: https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints
 endpoints:
-  custom: []
+  # Example: OpenAI
+  # openAI:
+  #   apiKey: "${OPENAI_API_KEY}"
+
+  # Example: Anthropic
+  # anthropic:
+  #   apiKey: "${ANTHROPIC_API_KEY}"
+
+  # Example: custom/OpenAI-compatible provider
+  # custom:
+  #   - name: "My Provider"
+  #     apiKey: "${MY_PROVIDER_API_KEY}"
+  #     baseURL: "https://api.myprovider.com/v1"
+  #     models:
+  #       default: ["model-name"]

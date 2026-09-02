@@ -28,12 +28,28 @@ Edit `.env` and set at minimum:
 - `JWT_SECRET` and `JWT_REFRESH_SECRET` – generate with `openssl rand -hex 32`
 - `MEILI_MASTER_KEY` – generate with `openssl rand -hex 32`
 - `DOMAIN_CLIENT` – the URL your ingress proxy exposes LibreChat on, e.g. `https://chat.example.com`
-- At least one AI provider API key (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, …)
 
-### 2. Configure LibreChat
+### 2. Configure AI providers
 
-Edit `librechat.yaml` to enable the AI endpoints you want.  
-Full reference: <https://www.librechat.ai/docs/configuration/librechat_yaml>
+AI provider API keys and endpoint settings are managed in `librechat.yaml`, not in `.env`. Uncomment and fill in the relevant blocks for the providers you want to use. Each key is read from an environment variable so you can store the actual secret in `.env`:
+
+```yaml
+# librechat.yaml
+endpoints:
+  openAI:
+    apiKey: "${OPENAI_API_KEY}"
+  anthropic:
+    apiKey: "${ANTHROPIC_API_KEY}"
+```
+
+Then add the corresponding variable to `.env`:
+
+```
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+Full endpoint reference: <https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints>
 
 ### 3. Start
 
@@ -53,6 +69,27 @@ docker compose logs -f api
 The API listens on `127.0.0.1:3080`. Configure your existing reverse proxy (Traefik, Caddy, nginx, …) to forward traffic for your domain to that address.  
 Make sure to pass `Upgrade` / `Connection` headers for WebSocket support (required for chat streaming).
 
+## Adding users
+
+Registration is closed by default (`ALLOW_REGISTRATION=false`). The first user to register becomes an admin, so the workflow for onboarding additional users is:
+
+1. Temporarily enable registration in `.env`: `ALLOW_REGISTRATION=true`
+2. Restart the stack: `docker compose up -d`
+3. Have the new user navigate to your LibreChat URL and create their account.
+4. Once done, set `ALLOW_REGISTRATION=false` again and restart.
+
+This keeps the instance effectively invite-only without requiring the admin panel.
+
+## File uploads (without RAG)
+
+Users can attach files to any conversation. Without the RAG pipeline, uploaded files are:
+
+- **Stored locally** in the `librechat-uploads` Docker volume (persisted across restarts).
+- **Sent directly to the model** for context — ideal for image analysis (vision), PDF reading, and code review with models that support file/vision input (e.g. GPT-4o, Claude 3.x).
+- **Not indexed or searchable** — without RAG there is no vector database, so files cannot be semantically searched across conversations.
+
+If you later want document search/Q&A over uploaded files, you can add the RAG API and pgvector services from the upstream `deploy-compose.yml`.
+
 ## Updating LibreChat
 
 ```bash
@@ -62,6 +99,6 @@ docker compose up -d --remove-orphans
 
 ## Security notes
 
-- Registration is disabled by default (`ALLOW_REGISTRATION=false`). Create your first user via the LibreChat web UI on first run, then keep registration closed.
+- Registration is disabled by default (`ALLOW_REGISTRATION=false`). Re-enable it only briefly when onboarding a new user.
 - The API port (3080) is bound to `127.0.0.1` only — not accessible from outside the host without going through your ingress proxy.
 - MongoDB and Meilisearch are not exposed to the host network at all; they are internal Docker services.
