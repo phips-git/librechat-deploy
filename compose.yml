@@ -12,6 +12,11 @@ services:
       - NODE_ENV=production
       - MONGO_URI=mongodb://mongodb:27017/LibreChat
       - MEILI_HOST=http://meilisearch:7700
+      - ALLOW_REGISTRATION=false
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - DOMAIN_CLIENT=${DOMAIN_CLIENT}
     volumes:
       - ./librechat.yaml:/app/librechat.yaml:ro
       - librechat-images:/app/client/public/images
@@ -32,10 +37,9 @@ services:
     container_name: librechat-meilisearch
     image: getmeili/meilisearch:v1.35.1
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       - MEILI_NO_ANALYTICS=true
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     volumes:
       - meilisearch-data:/meili_data
 
