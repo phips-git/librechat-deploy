@@ -1,7 +1,7 @@
 name: librechat
 
 networks:
-  librechat_network:
+  internal_network:
   reverse_proxy_network:
     external: true
 
@@ -38,7 +38,7 @@ services:
       - librechat_uploads:/app/uploads
       - librechat_logs:/app/api/logs
     networks:
-      - librechat_network
+      - internal_network
       # Allow access from reverse proxy as application entrypoint
       - reverse_proxy_network
     depends_on:
@@ -52,7 +52,7 @@ services:
       - mongodb_data:/data/db
     command: mongod --noauth
     networks:
-      - librechat_network
+      - internal_network
 
   meilisearch:
     image: getmeili/meilisearch:v1.35.1
@@ -64,4 +64,4 @@ services:
     volumes:
       - meilisearch_data:/meili_data
     networks:
-      - librechat_network
+      - internal_network
