@@ -18,7 +18,7 @@ volumes:
 
 services:
   librechat-api:
-    image: ghcr.io/danny-avila/librechat:latest
+    image: registry.librechat.ai/danny-avila/librechat-api:latest
     restart: always
     logging: *default-logging
     env_file:
