@@ -19,9 +19,12 @@ endpoints:
   #   apiKey: "${ANTHROPIC_API_KEY}"
 
   # Example: custom/OpenAI-compatible provider
-  # custom:
-  #   - name: "My Provider"
-  #     apiKey: "${MY_PROVIDER_API_KEY}"
-  #     baseURL: "https://api.myprovider.com/v1"
-  #     models:
-  #       default: ["model-name"]
+  "custom":
+    [
+      {
+        "name": "Adacor",
+        "apiKey": "${ADACOR_API_KEY}",
+        "baseURL": "https://api.adacor.ai/chat/privateai/v1",
+        "models": { "default": ["qwen3-5-a3b-35bthinking-256k"], fetch: true },
+      },
+    ]
