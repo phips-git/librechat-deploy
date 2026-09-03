@@ -21,6 +21,8 @@ services:
     image: ghcr.io/danny-avila/librechat:latest
     restart: always
     logging: *default-logging
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
       - MONGO_URI=mongodb://librechat-mongodb:27017/LibreChat
