@@ -18,19 +18,19 @@ endpoints:
   # anthropic:
   #   apiKey: "${ANTHROPIC_API_KEY}"
 
-  "custom":
+  custom:
     [
       {
-        "name": "Adacor",
-        "apiKey": "${ADACOR_API_KEY}",
-        "baseURL": "https://api.adacor.ai/chat/privateai/v1",
-        "models": { "default": ["qwen3-5-a3b-35bthinking-256k"], fetch: true },
+        name: Adacor,
+        apiKey: "${ADACOR_API_KEY}",
+        baseURL: https://api.adacor.ai/chat/privateai/v1,
+        models: { default: [qwen3-5-a3b-35bthinking-256k], fetch: true },
         titleConvo: true,
-        titleModel: "llama-3-8b-32k",
+        titleModel: llama-3-8b-32k,
       },
     ]
 
-  "webSearch":
-    searchProvider: keenable
-    scraperProvider: keenable
-    rerankerType: none
+webSearch:
+  searchProvider: keenable
+  scraperProvider: keenable
+  rerankerType: none
