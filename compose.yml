@@ -1,5 +1,3 @@
-name: librechat
-
 networks:
   internal_network:
   reverse_proxy_network:
@@ -19,7 +17,7 @@ volumes:
   librechat_logs:
 
 services:
-  api:
+  librechat-api:
     image: ghcr.io/danny-avila/librechat:latest
     restart: always
     logging: *default-logging
@@ -42,9 +40,9 @@ services:
       # Allow access from reverse proxy as application entrypoint
       - reverse_proxy_network
     depends_on:
-      - mongodb
+      - librechat-mongodb
 
-  mongodb:
+  librechat-mongodb:
     image: mongo:8.0
     restart: always
     logging: *default-logging
@@ -54,7 +52,7 @@ services:
     networks:
       - internal_network
 
-  meilisearch:
+  librechat-meilisearch:
     image: getmeili/meilisearch:v1.35.1
     restart: always
     logging: *default-logging
