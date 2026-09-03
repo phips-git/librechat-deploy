@@ -39,6 +39,8 @@ services:
       - librechat_logs:/app/api/logs
     networks:
       - librechat_network
+      # Allow access from reverse proxy as application entrypoint
+      - reverse_proxy_network
     depends_on:
       - mongodb
 
