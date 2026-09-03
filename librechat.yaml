@@ -27,6 +27,7 @@ endpoints:
         models: { default: [qwen3-5-a3b-35bthinking-256k], fetch: true },
         titleConvo: true,
         titleModel: llama-3-8b-32k,
+        addParams: { web_search: true },
       },
     ]
 
@@ -34,3 +35,7 @@ webSearch:
   searchProvider: keenable
   scraperProvider: keenable
   rerankerType: none
+
+interface:
+  runCode: false
+  webSearch: false
