@@ -18,7 +18,6 @@ endpoints:
   # anthropic:
   #   apiKey: "${ANTHROPIC_API_KEY}"
 
-  # Example: custom/OpenAI-compatible provider
   "custom":
     [
       {
@@ -30,3 +29,8 @@ endpoints:
         titleModel: "llama-3-8b-32k",
       },
     ]
+
+  "webSearch":
+    searchProvider: keenable
+    scraperProvider: keenable
+    rerankerType: none
