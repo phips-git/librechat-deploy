@@ -1,5 +1,5 @@
 networks:
-  internal_network:
+  internal-network:
   reverse_proxy_network:
     external: true
 
@@ -10,58 +10,16 @@ x-logging: &default-logging
     max-file: "3"
 
 volumes:
-  mongodb_data:
-  meilisearch_data:
-  librechat_images:
-  librechat_uploads:
-  librechat_logs:
+  open-webui:
 
 services:
-  librechat-api:
-    image: registry.librechat.ai/danny-avila/librechat-dev-api:latest
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main-slim
     restart: always
     logging: *default-logging
-    env_file:
-      - .env
-    environment:
-      - NODE_ENV=production
-      - MONGO_URI=mongodb://librechat-mongodb:27017/LibreChat
-      - MEILI_HOST=http://librechat-meilisearch:7700
-      - ALLOW_REGISTRATION=false
-      - JWT_SECRET=${JWT_SECRET}
-      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
-      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
-      - DOMAIN_CLIENT=${DOMAIN_CLIENT}
     volumes:
-      - ./librechat.yaml:/app/librechat.yaml:ro
-      - librechat_images:/app/client/public/images
-      - librechat_uploads:/app/uploads
-      - librechat_logs:/app/api/logs
+      - open-webui:/app/backend/data
     networks:
-      - internal_network
+      - internal-network
       # Allow access from reverse proxy as application entrypoint
       - reverse_proxy_network
-    depends_on:
-      - librechat-mongodb
-
-  librechat-mongodb:
-    image: mongo:8.0
-    restart: always
-    logging: *default-logging
-    volumes:
-      - mongodb_data:/data/db
-    command: mongod --noauth
-    networks:
-      - internal_network
-
-  librechat-meilisearch:
-    image: getmeili/meilisearch:v1.35.1
-    restart: always
-    logging: *default-logging
-    environment:
-      - MEILI_NO_ANALYTICS=true
-      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
-    volumes:
-      - meilisearch_data:/meili_data
-    networks:
-      - internal_network
