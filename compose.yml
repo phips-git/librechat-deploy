@@ -19,6 +19,44 @@ services:
     image: ghcr.io/open-webui/open-webui:main-slim
     restart: always
     logging: *default-logging
+    environment:
+      DEFAULT_LOCALE: de
+      WEBUI_URL: ${WEBUI_URL}
+      ENABLE_SIGNUP: false
+      ENABLE_PASSWORD_CHANGE_FORM: false
+      WEBUI_ADMIN_NAME: ${WEBUI_ADMIN_NAME}
+      WEBUI_ADMIN_EMAIL: ${WEBUI_ADMIN_EMAIL}
+      WEBUI_ADMIN_PASSWORD: ${WEBUI_ADMIN_PASSWORD}
+      ENABLE_WEB_SEARCH: True
+      WEB_SEARCH_ENGINE:
+      ENABLE_CALENDAR: false
+      ENABLE_CHANNELS: true
+      ENABLE_SUBAGENTS: true
+      OPENAI_API_BASE_URL: ${OPENAI_API_BASE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ENABLE_BASE_MODELS_CACHE: true
+      CORS_ALLOW_ORIGIN: ${WEBUI_URL}
+      # HTTP Strict Transport Security: tells browsers to only use HTTPS
+      HSTS: max-age=31536000;includeSubDomains
+      # Prevents the page from being embedded in iframes on other sites
+      XFRAME_OPTIONS: DENY
+      # Prevents browsers from MIME-type sniffing
+      XCONTENT_TYPE: nosniff
+      # Controls how much referrer information is sent with requests
+      REFERRER_POLICY: strict-origin-when-cross-origin
+      # Restricts access to browser features
+      PERMISSIONS_POLICY: camera=(),microphone=(),geolocation=()
+      # Content Security Policy
+      CONTENT_SECURITY_POLICY: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'
+      # Content Security Policy in report-only mode (logs violations without enforcing)
+      CONTENT_SECURITY_POLICY_REPORT_ONLY: default-src 'self'; report-uri /csp-report
+      # Cross-Origin isolation headers
+      CROSS_ORIGIN_EMBEDDER_POLICY: require-corp
+      CROSS_ORIGIN_OPENER_POLICY: same-origin
+      CROSS_ORIGIN_RESOURCE_POLICY: same-origin
+      WEBUI_SESSION_COOKIE_SECURE: true
+      WEBUI_SESSION_COOKIE_SAME_SITE: strict
+
     volumes:
       - open-webui:/app/backend/data
     networks:
