@@ -2,7 +2,7 @@ name: open-webui
 
 networks:
   internal-network:
-  reverse_proxy_network:
+  reverse-proxy-network:
     external: true
 
 x-logging: &default-logging
@@ -24,4 +24,4 @@ services:
     networks:
       - internal-network
       # Allow access from reverse proxy as application entrypoint
-      - reverse_proxy_network
+      - reverse-proxy-network
