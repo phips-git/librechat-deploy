@@ -48,8 +48,6 @@ services:
       PERMISSIONS_POLICY: camera=(),microphone=(),geolocation=()
       # Content Security Policy
       CONTENT_SECURITY_POLICY: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'
-      # Content Security Policy in report-only mode (logs violations without enforcing)
-      CONTENT_SECURITY_POLICY_REPORT_ONLY: default-src 'self'; report-uri /csp-report
       # Cross-Origin isolation headers
       CROSS_ORIGIN_EMBEDDER_POLICY: require-corp
       CROSS_ORIGIN_OPENER_POLICY: same-origin
