@@ -25,6 +25,7 @@ endpoints:
         apiKey: "${ADACOR_API_KEY}",
         baseURL: https://api.adacor.ai/chat/privateai/v1,
         models: { default: [qwen3-5-a3b-35bthinking-256k], fetch: true },
+        addParams: { web_search: true },
         titleConvo: true,
         titleModel: llama-3-8b-32k,
       },
