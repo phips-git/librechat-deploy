@@ -49,7 +49,6 @@ services:
       # Content Security Policy
       CONTENT_SECURITY_POLICY: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'
       # Cross-Origin isolation headers
-      CROSS_ORIGIN_EMBEDDER_POLICY: require-corp
       CROSS_ORIGIN_OPENER_POLICY: same-origin
       CROSS_ORIGIN_RESOURCE_POLICY: same-origin
       WEBUI_SESSION_COOKIE_SECURE: true
