@@ -47,7 +47,7 @@ services:
       # Restricts access to browser features
       PERMISSIONS_POLICY: camera=(),microphone=(),geolocation=()
       # Content Security Policy
-      CONTENT_SECURITY_POLICY: default-src 'self'; script-src 'self' 'sha256-mnaaXyvbcByhLbuWBYZh6wbDPJZMxht7p8Nv3a6oYuA='; style-src 'self' 'unsafe-inline'
+      CONTENT_SECURITY_POLICY: default-src 'self'; script-src 'self' 'sha256-mnaaXyvbcByhLbuWBYZh6wbDPJZMxht7p8Nv3a6oYuA=' ha256-cHDKQEL14wCVHKfDLIFiXNGePhff+dPnS8BLAdG2E98=; style-src 'self' 'unsafe-inline'
       # Cross-Origin isolation headers
       CROSS_ORIGIN_OPENER_POLICY: same-origin
       CROSS_ORIGIN_RESOURCE_POLICY: same-origin
