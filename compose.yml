@@ -13,7 +13,7 @@ volumes:
   open-webui:
 
 services:
-  openwebui:
+  open-webui:
     image: ghcr.io/open-webui/open-webui:main-slim
     restart: always
     logging: *default-logging
