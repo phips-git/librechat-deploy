@@ -47,7 +47,7 @@ services:
       # Restricts access to browser features
       PERMISSIONS_POLICY: camera=(),microphone=(),geolocation=()
       # Content Security Policy
-      CONTENT_SECURITY_POLICY: "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' ws: wss:"
+      CONTENT_SECURITY_POLICY: "style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' ws: wss:"
       # Cross-Origin isolation headers
       CROSS_ORIGIN_OPENER_POLICY: same-origin
       CROSS_ORIGIN_RESOURCE_POLICY: same-origin
