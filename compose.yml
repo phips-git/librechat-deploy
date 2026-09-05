@@ -20,7 +20,7 @@ services:
     restart: always
     logging: *default-logging
     environment:
-      DEFAULT_LOCALE: de
+      DEFAULT_LOCALE: de-DE
       WEBUI_URL: ${WEBUI_URL}
       ENABLE_SIGNUP: false
       ENABLE_PASSWORD_CHANGE_FORM: false
